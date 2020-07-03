@@ -103,32 +103,27 @@
                       <div class="text-danger" *ngIf="form.get('salary').errors.pattern">Please enter numeric value</div>
                     </div>                   
                   </div>
-                  <!-- ...more form controls... -->
-<!-- 
-    <div class="form-group" formGroupName="myCheckboxGroup">
-      <div class="label">Check at least one checkbox <span class="highlight">*</span></div>
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" formControlName="myCheckbox1" id="myCheckbox1" (change)="onCheckboxChange($event)">
-        <label class="custom-control-label" for="myCheckbox1">Happy</label>
-      </div>
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" formControlName="myCheckbox2" id="myCheckbox2" (change)="onCheckboxChange($event)">
-        <label class="custom-control-label" for="myCheckbox2">Grouped</label>
-      </div>
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" formControlName="myCheckbox3" id="myCheckbox3" (change)="onCheckboxChange($event)">
-        <label class="custom-control-label" for="myCheckbox3">Checkboxes</label>
-      </div>
+                  <!-- ...form check box start... -->
 
-      <div class="invalid-feedback" *ngIf="form.controls['myCheckboxGroup'].errors && form.controls['myCheckboxGroup'].errors.requireOneCheckboxToBeChecked">At least one checkbox is required to check</div>
-    </div>
-    <p class="error" *ngIf="form.get.myCheckboxGroup.errors?.required">
-      Checkbox is required, select atleast one value.
-    </p> -->
+                  <div class="form-group" formGroupName="myCheckboxGroup">
+                    <label>Please Select Department <span class="text-danger">*</span></label>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" formControlName="it" id="it" (change)="onCheckboxChange($event)">
+                      <label class="custom-control-label" for="it">IT</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" formControlName="management" id="management" (change)="onCheckboxChange($event)" >
+                      <label class="custom-control-label" for="management">Management</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" formControlName="rmg" id="rmg" (change)="onCheckboxChange($event)">
+                      <label class="custom-control-label" for="rmg">RMG</label>
+                    </div>
+                
+                    <div class="invalid-feedback text-danger" *ngIf="form.controls['myCheckboxGroup'].errors && form.controls['myCheckboxGroup'].errors.requireOneCheckboxToBeChecked">At least one checkbox is required to check</div>
+                  </div>
   
-  
-
-    <!-- ...more form controls... -->
+                  <!-- ...form check box end... -->
                   <div class="form-group">
                     <button class="btn btn-primary"  [disabled]="!form.valid">Register</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { EmployeeService } from '../../service/employee.service';
 import {Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import {requireCheckboxesToBeCheckedValidator} from './require-checkboxes-to-be-checked.validator';
 
 @Component({
   selector: 'app-emp-list',
@@ -14,29 +15,30 @@ export class EmpListComponent implements OnInit {
   showPopUpModel:boolean = false;
   dataSend = "";
   employeeDetail : any = {};
+  showInputField = true;
 
   form = new FormGroup({ 
-    id: new FormControl('', [
+    id: new FormControl({value: '', disabled: this.showInputField}, [
       Validators.required,
       Validators.pattern("^[0-9]*$")
     ]),
-    name: new FormControl('', [
+    name: new FormControl({value: '', disabled: this.showInputField}, [
       Validators.required,
     ]),
-    age: new FormControl('', [
+    age: new FormControl({value: '', disabled: this.showInputField}, [
       Validators.required,
       Validators.pattern("^[0-9]*$"),
       Validators.maxLength(2)
     ]),
-    salary: new FormControl('', [
+    salary: new FormControl({value: '', disabled: this.showInputField}, [
       Validators.required,
       Validators.pattern("^[0-9]*$"),      
     ]),
     myCheckboxGroup: new FormGroup({
-      myCheckbox1: new FormControl(false),
-      myCheckbox2: new FormControl(false),
-      myCheckbox3: new FormControl(false),
-    }, [Validators.required]),
+      it: new FormControl(false),
+      management: new FormControl(false),
+      rmg: new FormControl(false),
+    }, requireCheckboxesToBeCheckedValidator()),
     
    });
  
@@ -47,7 +49,6 @@ export class EmpListComponent implements OnInit {
   ngOnInit() {   
     this.service.getEmpList().subscribe( list => {this.EmpList = list;
       this.EmpList = this.EmpList.data;
-      console.log(this.EmpList); 
     });
   }
 
@@ -56,7 +57,6 @@ export class EmpListComponent implements OnInit {
     this.service.getEmpDetail(id).subscribe( detail => {
       this.Employee =  detail;
       this.Employee = this.Employee.data;
-      console.log(this.Employee)
     });
   }
 
@@ -68,19 +68,23 @@ export class EmpListComponent implements OnInit {
 
   onSubmit(){
     this.service.addEmployee(JSON.stringify(this.form.value)).subscribe( responce => {
-      console.log(responce);
       this.form.reset();
     });
-  }
-
-  sordByDetail(name){
-    console.log(name);
   }
 
   showEmployeeDetail(empDetail){
     this.showPopUpModel = !this.showPopUpModel
     this.employeeDetail=empDetail;
     
+  }
+
+  onCheckboxChange(e) {
+    if (e.target.checked) {
+      const state = 'enable';
+      Object.keys(this.form.controls).forEach((controlName) => {
+        this.form.controls[controlName][state](); 
+    });
+    } 
   }
 
 }
